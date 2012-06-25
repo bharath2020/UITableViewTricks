@@ -17,6 +17,7 @@
 @interface BBViewController ()
 -(void)setupShapeFormationInVisibleCells;
 -(void)loadDataSource;
+-(float)getDistanceRatio;
 @end
 
 @implementation BBViewController
@@ -40,12 +41,18 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-   
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self setupShapeFormationInVisibleCells];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -74,13 +81,20 @@
     NSDictionary *info = [mDataSource objectAtIndex:indexPath.row];
     [cell setCellTitle:[info objectForKey:KEY_TITLE]];
     [cell setIcon:[info objectForKey:KEY_IMAGE]];
-
-     return cell;
+    
+    return cell;
 }
 
 
 #define HORIZONTAL_RADIUS_RATIO 0.8
+#define VERTICAL_RADIUS_RATIO 1.2
 #define HORIZONTAL_TRANSLATION -130.0;
+
+-(float)getDistanceRatio
+{
+    return (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? VERTICAL_RADIUS_RATIO : HORIZONTAL_RADIUS_RATIO);
+}
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self setupShapeFormationInVisibleCells];
@@ -113,7 +127,7 @@
         //i.e. X = horizontal_radius * cos( t )
         //here horizontal_radius would be some percentage off the vertical radius. percentage is defined by HORIZONTAL_RADIUS_RATIO
         //HORIZONTAL_RADIUS_RATIO of 1 is equal to circle
-        float x = (floorf(xRadius*HORIZONTAL_RADIUS_RATIO)) * cosf(angle );
+        float x = (floorf(xRadius*[self getDistanceRatio])) * cosf(angle );
         x = x + HORIZONTAL_TRANSLATION;
         
         frame.origin.x = x ;
@@ -127,8 +141,7 @@
 -(void)loadDataSource
 {
     NSMutableArray *dataSource = [[NSMutableArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"]];
-    NSLog(@"%@", dataSource);
-
+    
     mDataSource = [[NSMutableArray alloc] init];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

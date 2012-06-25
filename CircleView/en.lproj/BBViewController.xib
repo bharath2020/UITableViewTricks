@@ -38,7 +38,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="629608742">
 						<reference key="NSNextResponder" ref="774585933"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUITableView" id="176511842">
 								<reference key="NSNextResponder" ref="629608742"/>
@@ -64,13 +64,12 @@
 							</object>
 							<object class="IBUILabel" id="109569426">
 								<reference key="NSNextResponder" ref="629608742"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{16, 20}, {11, 421}}</string>
+								<int key="NSvFlags">276</int>
+								<string key="NSFrame">{{16, 80}, {11, 300}}</string>
 								<reference key="NSSuperview" ref="629608742"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<int key="IBUITag">100</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -87,7 +86,7 @@
 								</object>
 								<string key="IBUIShadowOffset">{0, 1}</string>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<float key="IBUIMinimumFontSize">10</float>
+								<float key="IBUIMinimumFontSize">6</float>
 								<int key="IBUINumberOfLines">34</int>
 								<int key="IBUITextAlignment">1</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
@@ -101,7 +100,6 @@
 									<double key="NSSize">16</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 460}</string>
