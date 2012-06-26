@@ -7,6 +7,7 @@ Check the for the description at my blog https://iphone2020.wordpress.com/2012/0
 This Control also appeared in
 
 Maniacdev.com
+
 http://mobiledevelopertips.com/
 
 Thanks for the post guys.
