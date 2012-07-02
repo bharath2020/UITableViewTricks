@@ -13,6 +13,6 @@ http://www.maniacdev.com
 
 http://mobiledevelopertips.com/
 
-Cocoa Controls( http://cocoacontrols.com) and was the awarded Control of the Week (http://cocoacontrols.com/posts/2012/07/02/control-of-the-week-circleview )too.
+Cocoa Controls( http://cocoacontrols.com/platforms/ios/controls/circleview ) and was the awarded Control of the Week (http://cocoacontrols.com/posts/2012/07/02/control-of-the-week-circleview )too.
 
 Thanks for the post guys.
