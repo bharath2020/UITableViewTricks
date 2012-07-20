@@ -10,9 +10,15 @@
 #import "BBCell.h"
 #import <QuartzCore/QuartzCore.h>
 
+//Keys used in the plist file to read the data for the table
 #define KEY_TITLE @"title"
 #define KEY_IMAGE_NAME @"image_name"
 #define KEY_IMAGE @"image"
+
+#define HORIZONTAL_RADIUS_RATIO 0.8
+#define VERTICAL_RADIUS_RATIO 1.2
+#define HORIZONTAL_TRANSLATION -120.0
+#define CIRCLE_DIRECTION_RIGHT 0
 
 @interface BBViewController ()
 -(void)setupShapeFormationInVisibleCells;
@@ -51,6 +57,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    //we need to update the cells as the table might have changed its dimensions after rotation
     [self setupShapeFormationInVisibleCells];
     
 }
@@ -58,6 +65,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    //update the cells to form the circle shape
     [self setupShapeFormationInVisibleCells];
 }
 
@@ -86,21 +94,27 @@
 }
 
 
-#define HORIZONTAL_RADIUS_RATIO 0.8
-#define VERTICAL_RADIUS_RATIO 1.2
-#define HORIZONTAL_TRANSLATION -130.0;
 
--(float)getDistanceRatio
+- (float)getDistanceRatio
 {
     return (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? VERTICAL_RADIUS_RATIO : HORIZONTAL_RADIUS_RATIO);
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self setupShapeFormationInVisibleCells];
+    float totalHeight = [mTableView rowHeight] * [mTableView.dataSource tableView:(UITableView*)scrollView numberOfRowsInSection:0]-14;
+    if( scrollView.contentOffset.y >= totalHeight )
+    {
+        [scrollView scrollRectToVisible:CGRectMake(0.0, 0.0, 320.0, 80.0) animated:NO];
+        
+    }
+       
 }
 
--(void)setupShapeFormationInVisibleCells
+//The heart of this app.
+//this function iterates through all visible cells and lay them in a circular shape
+- (void)setupShapeFormationInVisibleCells
 {
     NSArray *indexpaths = [mTableView indexPathsForVisibleRows];
     float shift = ((int)mTableView.contentOffset.y % (int)mTableView.rowHeight);  
@@ -123,12 +137,24 @@
         // t= asin(Y / vertical_radius) or asin = sin inverse
         float angle = asinf(y/(radius));
         
+        if( CIRCLE_DIRECTION_RIGHT )
+        {
+            angle =  angle + M_PI;
+        }
+        
         //Apply Angle in X point of Ellipse equation
         //i.e. X = horizontal_radius * cos( t )
         //here horizontal_radius would be some percentage off the vertical radius. percentage is defined by HORIZONTAL_RADIUS_RATIO
         //HORIZONTAL_RADIUS_RATIO of 1 is equal to circle
         float x = (floorf(xRadius*[self getDistanceRatio])) * cosf(angle );
-        x = x + HORIZONTAL_TRANSLATION;
+
+        if( CIRCLE_DIRECTION_RIGHT )
+        {
+            x = x + HORIZONTAL_TRANSLATION*-2;// we have to shift the center of the circle toward the right
+        }
+        else {
+            x = x + HORIZONTAL_TRANSLATION;  
+        }
         
         frame.origin.x = x ;
         if( !isnan(x))
@@ -138,7 +164,8 @@
     }
 }
 
--(void)loadDataSource
+//read the data from the plist and alos the image will be masked to form a circular shape
+- (void)loadDataSource
 {
     NSMutableArray *dataSource = [[NSMutableArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"]];
     
