@@ -68,7 +68,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 30;//[mDataSource count] * CONTENT_SIZE_MULTIPLY_FACTOR;
+    return [mDataSource count] * CONTENT_SIZE_MULTIPLY_FACTOR;
 ;
 }
 

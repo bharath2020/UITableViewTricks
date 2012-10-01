@@ -48,6 +48,13 @@
 
 - (void)resetContentOffsetIfNeeded
 {
+    NSArray *indexpaths = [self indexPathsForVisibleRows];
+    int totalVisibleCells =[indexpaths count];
+    if( mTotalCellsVisible > totalVisibleCells )
+    {
+        //we dont have enough content to generate scroll
+        return;
+    }
     CGPoint contentOffset  = self.contentOffset;
     
     //check the top condition
@@ -70,8 +77,9 @@
 - (void)setupShapeFormationInVisibleCells
 {
     NSArray *indexpaths = [self indexPathsForVisibleRows];
-    float shift = ((int)self.contentOffset.y % (int)self.rowHeight);  
     int totalVisibleCells =[indexpaths count];
+
+    float shift = ((int)self.contentOffset.y % (int)self.rowHeight);  
     float angle_gap = M_PI/(mTotalCellsVisible+1); // find the angle difference after dividing the table into totalVisibleCells +1
     float percentage_visible = shift/self.rowHeight;// if the cell is visible only half.. that the content offset is not multiples of row height.. then find by how much percentage the first cell is visible.
 
