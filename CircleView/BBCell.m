@@ -18,10 +18,10 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         //add the image layer
         self.contentView.backgroundColor = [UIColor clearColor];
-        mImageLayer = [CALayer layer];
+        mImageLayer =[CALayer layer];
         mImageLayer.cornerRadius = 16.0;
-       // mImageLayer.backgroundColor = [UIColor greenColor].CGColor;
-       // mImageLayer.contents = (id)[UIImage imageNamed:@"2.png"].CGImage;
+        //mImageLayer.backgroundColor = [UIColor greenColor].CGColor;
+      //  mImageLayer.contents = (id)[UIImage imageNamed:@"2.png"].CGImage;
         [self.contentView.layer addSublayer:mImageLayer];
         mImageLayer.borderWidth=4.0;
         mImageLayer.borderColor = [UIColor whiteColor].CGColor;
@@ -58,7 +58,10 @@
 
 -(void)setIcon:(UIImage*)image
 {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0];
     mImageLayer.contents = (id)image.CGImage;
+    [CATransaction commit];
 }
 
 -(void)setSelected:(BOOL)selected

@@ -15,10 +15,7 @@
 #define KEY_IMAGE_NAME @"image_name"
 #define KEY_IMAGE @"image"
 
-#define HORIZONTAL_RADIUS_RATIO 0.8
-#define VERTICAL_RADIUS_RATIO 1.2
-#define HORIZONTAL_TRANSLATION -120.0
-#define CIRCLE_DIRECTION_RIGHT 0
+
 
 @interface BBViewController ()
 -(void)setupShapeFormationInVisibleCells;
@@ -36,7 +33,7 @@
     mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     mTableView.opaque=NO;
     mTableView.showsHorizontalScrollIndicator=NO;
-    mTableView.showsVerticalScrollIndicator=NO;
+    mTableView.showsVerticalScrollIndicator=YES;
     
     UILabel *mainTitle = (UILabel*) [self.view viewWithTag:100];
     mainTitle.text = @"CRICKET \n LEGENDS";
@@ -58,7 +55,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     //we need to update the cells as the table might have changed its dimensions after rotation
-    [self setupShapeFormationInVisibleCells];
+   // [self setupShapeFormationInVisibleCells];
     
 }
 
@@ -66,12 +63,13 @@
 {
     [super viewDidAppear:animated];
     //update the cells to form the circle shape
-    [self setupShapeFormationInVisibleCells];
+    //[self setupShapeFormationInVisibleCells];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [mDataSource count];
+    return 30;//[mDataSource count] * CONTENT_SIZE_MULTIPLY_FACTOR;
+;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -84,9 +82,8 @@
     if( !cell )
     {
         cell = [[BBCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:test];
-        
     }
-    NSDictionary *info = [mDataSource objectAtIndex:indexPath.row];
+    NSDictionary *info = [mDataSource objectAtIndex:indexPath.row % [mDataSource count]];
     [cell setCellTitle:[info objectForKey:KEY_TITLE]];
     [cell setIcon:[info objectForKey:KEY_IMAGE]];
     
@@ -94,75 +91,6 @@
 }
 
 
-
-- (float)getDistanceRatio
-{
-    return (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? VERTICAL_RADIUS_RATIO : HORIZONTAL_RADIUS_RATIO);
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self setupShapeFormationInVisibleCells];
-    float totalHeight = [mTableView rowHeight] * [mTableView.dataSource tableView:(UITableView*)scrollView numberOfRowsInSection:0]-14;
-    if( scrollView.contentOffset.y >= totalHeight )
-    {
-        [scrollView scrollRectToVisible:CGRectMake(0.0, 0.0, 320.0, 80.0) animated:NO];
-        
-    }
-       
-}
-
-//The heart of this app.
-//this function iterates through all visible cells and lay them in a circular shape
-- (void)setupShapeFormationInVisibleCells
-{
-    NSArray *indexpaths = [mTableView indexPathsForVisibleRows];
-    float shift = ((int)mTableView.contentOffset.y % (int)mTableView.rowHeight);  
-    int totalVisibleCells =[indexpaths count];
-    float y = 0.0;
-    float radius = mTableView.frame.size.height/2.0f;
-    float xRadius = radius;
-    
-    for( NSUInteger index =0; index < totalVisibleCells; index++ )
-    {
-        BBCell *cell = (BBCell*)[mTableView cellForRowAtIndexPath:[ indexpaths objectAtIndex:index]];
-        CGRect frame = cell.frame;
-        //we get the yPoint on the circle of this Cell
-        y = (radius-(index*mTableView.rowHeight) );//ideal yPoint if the scroll offset is zero
-        y+=shift;//add the scroll offset
-        
-        
-        //We can find the x Point by finding the Angle from the Ellipse Equation of finding y
-        //i.e. Y= vertical_radius * sin(t )
-        // t= asin(Y / vertical_radius) or asin = sin inverse
-        float angle = asinf(y/(radius));
-        
-        if( CIRCLE_DIRECTION_RIGHT )
-        {
-            angle =  angle + M_PI;
-        }
-        
-        //Apply Angle in X point of Ellipse equation
-        //i.e. X = horizontal_radius * cos( t )
-        //here horizontal_radius would be some percentage off the vertical radius. percentage is defined by HORIZONTAL_RADIUS_RATIO
-        //HORIZONTAL_RADIUS_RATIO of 1 is equal to circle
-        float x = (floorf(xRadius*[self getDistanceRatio])) * cosf(angle );
-
-        if( CIRCLE_DIRECTION_RIGHT )
-        {
-            x = x + HORIZONTAL_TRANSLATION*-2;// we have to shift the center of the circle toward the right
-        }
-        else {
-            x = x + HORIZONTAL_TRANSLATION;  
-        }
-        
-        frame.origin.x = x ;
-        if( !isnan(x))
-        {
-            cell.frame = frame;
-        }
-    }
-}
 
 //read the data from the plist and alos the image will be masked to form a circular shape
 - (void)loadDataSource
@@ -199,7 +127,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [mTableView reloadData];
-            [self setupShapeFormationInVisibleCells];
+           // [self setupShapeFormationInVisibleCells];
         });
     });
 }
