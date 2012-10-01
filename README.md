@@ -1,7 +1,7 @@
 UITableViewTricks
 =================
 
-Simple UITableView tricks with focus on UITableViewCell Layout
+Simple UITableView tricks with focus on Laying UITableViewCells in a Circular Format. Also, written my own subclass of UITablView to support infinite scrolling.
 
 Check the for the description at my blog https://iphone2020.wordpress.com/2012/06/10/uitableview-tricks/
 
