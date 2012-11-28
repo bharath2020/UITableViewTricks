@@ -1,9 +1,9 @@
 //
 //  main.m
-//  CircleView
+//  CircleView-Universal
 //
-//  Created by Bharath Booshan on 6/8/12.
-//  Copyright (c) 2012 Bharath Booshan Inc. All rights reserved.
+//  Created by Bharath Booshan on 11/25/12.
+//  Copyright (c) 2012 Integral Development Corporation. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

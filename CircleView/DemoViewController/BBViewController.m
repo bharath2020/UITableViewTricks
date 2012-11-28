@@ -38,12 +38,16 @@
     UILabel *mainTitle = (UILabel*) [self.view viewWithTag:100];
     mainTitle.text = @"CRICKET \n LEGENDS";
     [self loadDataSource];
+    
+    mTableView.transform = CGAffineTransformMakeRotation(-90 * M_PI / 180.0);
+
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    
     
 }
 

@@ -19,9 +19,18 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[BBViewController alloc] initWithNibName:@"BBViewController" bundle:nil];
+    
+    
+    // Override point for customization after application launch.
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.viewController = [[BBViewController alloc] initWithNibName:@"BBViewController_iPhone" bundle:nil];
+    } else {
+        self.viewController = [[BBViewController alloc] initWithNibName:@"BBViewController_iPad" bundle:nil];
+    }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    NSLog(@"%@", self.window);
+
     return YES;
 }
 

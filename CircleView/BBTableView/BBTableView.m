@@ -14,6 +14,8 @@
 #define CIRCLE_DIRECTION_RIGHT 0
 
 
+#define MORPHED_INDEX_PATH( __INDEXPATH__ ) [self morphedIndexPathForIndexPath:__INDEXPATH__  totalRows:_totalRows]
+
 @interface BBTableView()
 {
     int mTotalCellsVisible;
@@ -210,10 +212,39 @@
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSIndexPath *morphedIndexPath = [self morphedIndexPathForIndexPath:indexPath totalRows:_totalRows];
-    return [_dataSourceInterceptor.receiver tableView:tableView cellForRowAtIndexPath:morphedIndexPath];
+    return [_dataSourceInterceptor.receiver tableView:tableView cellForRowAtIndexPath:MORPHED_INDEX_PATH(indexPath)];
 }
 
+//// Editing
+//
+//// Individual rows can opt out of having the -editing property set for them. If not implemented, all rows are assumed to be editable.
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return [_dataSourceInterceptor.receiver tableView:tableView canEditRowAtIndexPath:MORPHED_INDEX_PATH(indexPath)];
+//}
+//
+//// Moving/reordering
+//
+//// Allows the reorder accessory view to optionally be shown for a particular row. By default, the reorder control will be shown only if the datasource implements -tableView:moveRowAtIndexPath:toIndexPath:
+//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return [_dataSourceInterceptor.receiver tableView:tableView canMoveRowAtIndexPath:indexPath];
+//}
+//
+//
+//// Data manipulation - insert and delete support
+//
+//// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return [_dataSourceInterceptor.receiver tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:MORPHED_INDEX_PATH(indexPath)];
+//}
+//
+//// Data manipulation - reorder / moving support
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+//{
+//    return [_dataSourceInterceptor.receiver tableView:tableView moveRowAtIndexPath:MORPHED_INDEX_PATH(sourceIndexPath) toIndexPath:MORPHED_INDEX_PATH(destinationIndexPath)];
+//}
 
 
 
