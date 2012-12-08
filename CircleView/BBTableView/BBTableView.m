@@ -116,7 +116,7 @@
         //CGFloat angle = (index +1)*angle_gap -( ( percentage_visible) * angle_gap);
         CGFloat angle = firstCellAngle;
         firstCellAngle+= angle_gap;
-        if( contentAlignment == eBBTableViewContentAlignmentRight )
+        if( contentAlignment == eBBTableViewContentAlignmentLeft )
         {
             angle =  angle + M_PI_2;
         }
@@ -134,7 +134,7 @@
         //TO DISPLAY RIGHT: then to display the circle towards right move the cellX (var x here) by half the width towards the right
         //TO DISPLAY LEFT : move the cellX by quarter the radius
         //FEEL FREE to play with x to allign the circle as per your needs
-        if( contentAlignment == eBBTableViewContentAlignmentRight )
+        if( contentAlignment == eBBTableViewContentAlignmentLeft )
         {
             x = x + self.frame.size.width/2;// we have to shift the center of the circle toward the right
         }
