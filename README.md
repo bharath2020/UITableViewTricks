@@ -5,8 +5,6 @@ Simple UITableView tricks with focus on UITableViewCell Layout
 
 ![Sample Screenshot] (https://raw.github.com/bharath2020/UITableViewTricks/master/sample_screen.png  "Sample Screenshot" )
 
-Check the description at my blog https://iphone2020.wordpress.com/2012/06/10/uitableview-tricks/
->>>>>>> 1d6ef3ae5b89c045ec4768a96cdfd60fbfe99494
 
 **Key Features:**
 
