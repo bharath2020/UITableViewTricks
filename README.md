@@ -3,8 +3,7 @@ UITableViewTricks
 
 Simple UITableView tricks with focus on UITableViewCell Layout
 
-
-/Users/bbooshan/Desktop/Screen Shot 2012-12-07 at 7.30.36 PM.png
+![Sample Screenshot] (/blob/master/sample_screen.png  "Sample Screenshot" )
 
 Check the for the description at my blog https://iphone2020.wordpress.com/2012/06/10/uitableview-tricks/
 
