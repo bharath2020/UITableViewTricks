@@ -61,6 +61,7 @@
     self.backgroundColor = [UIColor blackColor];
     contentAlignment = eBBTableViewContentAlignmentLeft;
     self.enableInfiniteScrolling = NO;
+    self.horizontalRadiusCorrection=1.0;
 }
 
 - (void)resetContentOffsetIfNeeded
@@ -99,7 +100,11 @@
     NSUInteger totalVisibleCells =[indexpaths count];
     
     CGFloat angle_gap = M_PI/(mTotalCellsVisible+1); // find the angle difference after dividing the table into totalVisibleCells +1
-    CGFloat radius = (self.frame.size.height-self.rowHeight*2.0)/2.0f;
+    
+    CGFloat vRadius = (self.frame.size.height-self.rowHeight*2.0f)/2.0f;
+    CGFloat hRadius = (self.frame.size.width )/2.0f;
+    CGFloat radius = (vRadius <  hRadius) ? vRadius : hRadius;
+
     CGFloat xRadius = radius;
     
     CGFloat firstCellAngle = [self getAngleForYOffset:self.contentOffset.y];

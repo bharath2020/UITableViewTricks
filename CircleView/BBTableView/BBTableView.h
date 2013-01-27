@@ -32,6 +32,6 @@ typedef enum _ContentAlignment
 
 @property(nonatomic, assign, getter = isInfiniteScrollingEnabled)BOOL enableInfiniteScrolling;
 @property(nonatomic, assign) EBBTableViewContentAlignment contentAlignment;
-@property(nonatomic, assign) CGFloat horizontalRadiusCorrection;//value from 0.0 - 0.5;
+@property(nonatomic, assign) CGFloat horizontalRadiusCorrection;//value from 1.0 - 0.5;
 
 @end
