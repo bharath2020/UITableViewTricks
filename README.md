@@ -24,7 +24,7 @@ Simple UITableView tricks with focus on UITableViewCell Layout
 
 
 
-For detailed description on logic behind this component, Please visit my blog https://iphone2020.wordpress.com/2012/10/01/uitableview-tricks-part-2-infinite-scrolling/
+For detailed description on logic behind this component, Please visit my blog http://bharath2020.in/2012/10/01/uitableview-tricks-part-2-infinite-scrolling/
 
 
 
